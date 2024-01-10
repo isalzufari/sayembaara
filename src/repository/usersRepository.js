@@ -65,12 +65,12 @@ class UsersRepository {
       values: [email],
     };
 
-    const [result, field] = await this.pool.query(
+    const [result] = await this.pool.query(
       query.text,
       query.values,
     );
-    console.log(result);
-    if (result.length > 0) {
+
+    if (result.length === 0) {
       throw new InvariantError('email or password wrong');
     }
 

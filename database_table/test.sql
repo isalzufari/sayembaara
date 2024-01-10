@@ -8,5 +8,6 @@ SHOW TABLEs;
 SELECT * FROM users;
 SELECT * FROM umkm;
 SELECT * FROM mahasiswa;
+SELECT * FROM authentications;
 
 DROP DATABASE sayembara;

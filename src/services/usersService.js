@@ -32,7 +32,7 @@ class UsersService {
 
   async login({ email, password }) {
     const body = await this.usersRepository.getPasswordByEmail(email);
-    console.log(body.password);
+    console.log(body);
 
     const match = await bcrypt.compare(password, body.password);
 
@@ -40,7 +40,7 @@ class UsersService {
       throw new AuthenticationError('email or password wrong');
     }
 
-    return id;
+    // return id;
   }
 }
 
