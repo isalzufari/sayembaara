@@ -1,5 +1,6 @@
 const pool = require('../db/pool');
 const idGenerator = require('../utils/idGenerator');
+
 const InvariantError = require('../exceptions/InvariantError');
 
 class UsersRepository {
@@ -56,6 +57,25 @@ class UsersRepository {
     if (result.length > 0) {
       throw new InvariantError('email is used');
     }
+  }
+
+  async getPasswordByEmail(email) {
+    const query = {
+      text: 'SELECT id, password FROM `users` WHERE `email` = ?',
+      values: [email],
+    };
+
+    const [result] = await this.pool.query(
+      query.text,
+      query.values,
+    );
+
+    if (result.length > 0) {
+      throw new InvariantError('email or password wrong');
+    }
+
+    const { id, password: hashedPassword } = result[0];
+    return { id, hashedPassword };
   }
 }
 

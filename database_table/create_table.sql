@@ -28,6 +28,11 @@ CREATE TABLE mahasiswa
   FOREIGN KEY (id_user) REFERENCES users (id)
 );
 
+CREATE TABLE authentications
+(
+  token TEXT NOT NULL
+);
+
 CREATE TABLE badge_request
 (
   id_user VARCHAR(255) NOT NULL,

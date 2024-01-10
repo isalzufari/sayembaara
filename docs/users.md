@@ -86,7 +86,7 @@ HTTP Response 400
 
 done
 
-Endpoint : POST /api/v1/login
+Endpoint : POST /api/v1/authentications
 
 Body Request :
 ```
@@ -105,7 +105,7 @@ HTTP Response 201
 
 Response Body Error :
 ```
-HTTP Response 400
+HTTP Response 401
 {
   "message": "email or password wrong"
 }

@@ -1,9 +1,14 @@
 const bcrypt = require('bcrypt');
+
 const UsersRepository = require('../repository/usersRepository');
+const AuthorizationRepository = require('../repository/authenticationsRepository');
+
+const AuthenticationError = require('../exceptions/AuthenticationError');
 
 class UsersService {
   constructor() {
     this.usersRepository = new UsersRepository();
+    this.authorizationRepository = new AuthorizationRepository();
   }
 
   async addUser({
@@ -23,6 +28,18 @@ class UsersService {
     });
 
     return result;
+  }
+
+  async login({ email, password }) {
+    const { id, hashedPassword } = await this.usersRepository.getPasswordByEmail(email);
+
+    const match = await bcrypt.compare(password, hashedPassword);
+
+    if (!match) {
+      throw new AuthenticationError('email or password wrong');
+    }
+
+    return { id, category };
   }
 }
 
