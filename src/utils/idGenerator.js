@@ -1,5 +1,5 @@
 function idGenerator() {
-  return String(Math.random() * 100000000);
+  return String(Math.round(Math.random() * 100000000));
 }
 
 module.exports = idGenerator;

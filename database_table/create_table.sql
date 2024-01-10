@@ -1,3 +1,4 @@
+-- Active: 1696384805376@@127.0.0.1@3306@sayembara
 CREATE TABLE users
 (
   id VARCHAR(255) PRIMARY KEY,
@@ -16,7 +17,6 @@ CREATE TABLE umkm
   id VARCHAR(255) PRIMARY KEY,
   id_user VARCHAR(255) NOT NULL,
   verified BOOLEAN NOT NULL DEFAULT (false),
-
   FOREIGN KEY (id_user) REFERENCES users (id)
 );
 
@@ -25,7 +25,6 @@ CREATE TABLE mahasiswa
   id VARCHAR(255) PRIMARY KEY,
   id_user VARCHAR(255) NOT NULL,
   expert BOOLEAN NOT NULL DEFAULT (false),
-
   FOREIGN KEY (id_user) REFERENCES users (id)
 );
 
@@ -33,7 +32,6 @@ CREATE TABLE badge_request
 (
   id_user VARCHAR(255) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
   FOREIGN KEY (id_user) REFERENCES users (id)
 );
 
@@ -41,7 +39,6 @@ CREATE TABLE verified_request
 (
   id_user VARCHAR(255) NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-
   FOREIGN KEY (id_user) REFERENCES users (id)
 );
 
@@ -56,7 +53,6 @@ CREATE TABLE mahasiswa_skills
   id VARCHAR(255) PRIMARY KEY,
   id_mahasiswa VARCHAR(255) NOT NULL,
   id_skills VARCHAR(255) NOT NULL,
-  
   FOREIGN KEY (id_mahasiswa) REFERENCES mahasiswa (id),
   FOREIGN KEY (id_skills) REFERENCES skills (id)
 );
@@ -73,7 +69,6 @@ CREATE TABLE jobs
   draft BOOLEAN NOT NULL DEFAULT (true),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  
   FOREIGN KEY (id_user) REFERENCES users (id)
 );
 
@@ -82,6 +77,5 @@ CREATE TABLE job_files
   id VARCHAR(255) PRIMARY KEY,
   id_job VARCHAR(255) NOT NULL,
   file VARCHAR(255),
-  
   FOREIGN KEY (id_job) REFERENCES jobs (id)
 );
