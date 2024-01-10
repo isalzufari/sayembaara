@@ -1,0 +1,10 @@
+@import 'bootstrap/scss/bootstrap.scss';
+
+$primary: $orange;
+
+$theme-colors: map-merge(
+  $theme-colors,
+  (
+    'primary': $primary,
+  )
+);

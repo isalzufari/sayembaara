@@ -8,7 +8,7 @@ const Onboard1 = () => {
       <h1>Sayembaara</h1>
       <img src="/img/onboard/onboard1.png" alt="" />
       <h6>Kembangkan UMKM Anda bersama Mahasiswa</h6>
-      <Link to="/onboarding/2" className='btn btn-primary'>Selanjutnya</Link>
+      <Link to="/onboarding/2" className='btn btn-primary w-100'>Selanjutnya</Link>
     </div>
   )
 }
