@@ -33,7 +33,7 @@ class UsersRepository {
     if (category === 'MAHASISWA') {
       const categoryId = idGenerator();
       query = {
-        text: 'INSERT INTO mahasiswa(id, id_user, verified) VALUES (?, ?, ?)',
+        text: 'INSERT INTO mahasiswa(id, id_user, expert) VALUES (?, ?, ?)',
         values: [categoryId, id, false],
       };
 
@@ -61,21 +61,20 @@ class UsersRepository {
 
   async getPasswordByEmail(email) {
     const query = {
-      text: 'SELECT id, password FROM `users` WHERE `email` = ?',
+      text: 'SELECT id, password, category FROM `users` WHERE email = ?',
       values: [email],
     };
 
-    const [result] = await this.pool.query(
+    const [result, field] = await this.pool.query(
       query.text,
       query.values,
     );
-
+    console.log(result);
     if (result.length > 0) {
       throw new InvariantError('email or password wrong');
     }
 
-    const { id, password: hashedPassword } = result[0];
-    return { id, hashedPassword };
+    return result[0];
   }
 }
 

@@ -31,15 +31,16 @@ class UsersService {
   }
 
   async login({ email, password }) {
-    const { id, hashedPassword } = await this.usersRepository.getPasswordByEmail(email);
+    const body = await this.usersRepository.getPasswordByEmail(email);
+    console.log(body.password);
 
-    const match = await bcrypt.compare(password, hashedPassword);
+    const match = await bcrypt.compare(password, body.password);
 
     if (!match) {
       throw new AuthenticationError('email or password wrong');
     }
 
-    return { id, category };
+    return id;
   }
 }
 
