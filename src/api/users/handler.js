@@ -1,6 +1,10 @@
+const UsersService = require('../../services/usersService');
+
 class UsersHandler {
-  constructor(service) {
-    this.service = service;
+  constructor() {
+    this.usersService = new UsersService();
+
+    this.postUserHandler = this.postUserHandler.bind(this);
   }
 
   async postUserHandler(request, h) {
@@ -8,7 +12,7 @@ class UsersHandler {
       name, email, password, category,
     } = request.payload;
 
-    const userId = await this.service.addUser({
+    const userId = await this.usersService.addUser({
       name, email, password, category,
     });
 

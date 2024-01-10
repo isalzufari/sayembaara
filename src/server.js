@@ -4,13 +4,9 @@ const Hapi = require('@hapi/hapi');
 
 const ClientError = require('./exceptions/ClientError');
 
-const UsersService = require('./services/usersService');
-
 const users = require('./api/users');
 
 async function init() {
-  const usersService = new UsersService();
-
   const server = Hapi.server({
     host: process.env.HOST,
     port: process.env.PORT,
@@ -23,9 +19,6 @@ async function init() {
 
   await server.register({
     plugin: users,
-    options: {
-      service: usersService,
-    },
   });
 
   server.ext('onPreResponse', (request, h) => {
