@@ -1,11 +1,9 @@
-const UsersService = require('../../services/usersService');
-
 class UsersHandler {
-  constructor() {
-    this.usersService = new UsersService();
+  constructor(service) {
+    this._service = service;
 
     this.postUserHandler = this.postUserHandler.bind(this);
-    this.handler = this.handler.bind(this);
+    this.getUserByIdHandler = this.getUserByIdHandler.bind(this);
   }
 
   async postUserHandler(request, h) {
@@ -13,12 +11,12 @@ class UsersHandler {
       name, email, password, category,
     } = request.payload;
 
-    const userId = await this.usersService.addUser({
+    const userId = await this._service.addUser({
       name, email, password, category,
     });
 
     const response = h.response({
-      message: 'user created',
+      status: 'success',
       data: {
         userId,
       },
@@ -28,17 +26,16 @@ class UsersHandler {
     return response;
   }
 
-  async handler(request, h) {
-    const { credentials } = request.auth;
+  async getUserByIdHandler(request, h) {
+    const { id } = request.auth.credentials;
+
+    const user = await this._service.getUserById({ id });
 
     const response = h.response({
-      message: 'user created',
-      data: {
-        credentials,
-      },
+      status: 'success',
+      data: user
     });
     response.code(200);
-
     return response;
   }
 }

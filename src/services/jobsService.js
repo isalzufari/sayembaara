@@ -10,7 +10,8 @@ class JobsService {
   async addJob(userId, {
     title, description, tag, deadline, reward, image, draft,
   }) {
-    console.log(image);
+
+    // mengubah base64 menjadi image dan mengembalikan path images
     for (let i = 0; i < image.length; i++) {
       const filePath = extractBase64Info(image[i]);
       image[i] = filePath;
@@ -30,6 +31,21 @@ class JobsService {
 
     const result = this.jobsRepository.addJob(userId, jobCreated);
 
+    return result;
+  }
+
+  async getJobs() {
+    const result = await this.jobsRepository.getJobs();
+    return result;
+  }
+
+  async getJobById({ id }) {
+    const result = await this.jobsRepository.getJobById(id);
+    return result;
+  }
+
+  async getImagesFromJobId({ id }) {
+    const result = await this.jobsRepository.getImagesFromJobId(id);
     return result;
   }
 }

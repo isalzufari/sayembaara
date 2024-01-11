@@ -4,7 +4,7 @@ const InvariantError = require('../exceptions/InvariantError');
 
 class AuthenticationsRepository {
   constructor() {
-    this.pool = pool.promise();
+    this._pool = pool.promise();
   }
 
   async addRefreshToken(token) {
@@ -13,19 +13,26 @@ class AuthenticationsRepository {
       values: [token],
     };
 
-    await this.pool.query(query.text, query.values);
+    await this._pool.query(query.text, query.values);
   }
 
   async verifyRefreshToken(token) {
-    const query = {
-      text: 'SELECT token FROM `token` = ?',
-      values: [token],
-    };
+    try {
+      const query = {
+        text: 'SELECT `token` FROM `authentications` WHERE `token` = ?',
+        values: [token],
+      };
 
-    const [result] = await this.pool.query(query.text, query.values);
+      const [result, fields] = await this._pool.query(
+        query.text,
+        query.values,
+      );
 
-    if (result.length > 0) {
-      throw new InvariantError('refresh token tidak valid');
+      if (!result.length > 0) {
+        throw new InvariantError('verifyRefreshToken: refresh token tidak valid');
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -35,7 +42,7 @@ class AuthenticationsRepository {
       values: [token],
     };
 
-    await this.pool.query(query.text, query.values);
+    await this._pool.query(query.text, query.values);
   }
 }
 

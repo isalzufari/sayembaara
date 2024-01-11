@@ -1,13 +1,13 @@
 const routes = (handler) => [
   {
     method: 'POST',
-    path: '/api/v1/users',
+    path: '/',
     handler: handler.postUserHandler,
   },
   {
     method: 'GET',
-    path: '/api/v1/users',
-    handler: handler.handler,
+    path: '/',
+    handler: handler.getUserByIdHandler,
     options: {
       auth: 'sayembara_jwt',
     },

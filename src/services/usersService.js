@@ -2,8 +2,8 @@ const bcrypt = require('bcrypt');
 
 const UsersRepository = require('../repository/usersRepository');
 const AuthorizationRepository = require('../repository/authenticationsRepository');
-
 const AuthenticationError = require('../exceptions/AuthenticationError');
+const AuthorizationError = require('../exceptions/AuthorizationError');
 
 class UsersService {
   constructor() {
@@ -18,13 +18,14 @@ class UsersService {
     await this.usersRepository.avaibilityEmail(email);
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    const defaultProfile = 'public/image/default/default-profile.jpg';
+    const defaultProfile = 'https://placehold.co/100x100';
+    const defaultBanner = 'https://placehold.co/600x200';
     const result = this.usersRepository.addUser({
       name,
       email,
       password: hashedPassword,
       profile: defaultProfile,
-      banner: defaultProfile,
+      banner: defaultBanner,
       category,
     });
 
@@ -32,21 +33,34 @@ class UsersService {
   }
 
   // return object of id (string) and category (string)
-  async login({ email, password }) {
-    const body = await this.usersRepository.getPasswordByEmail(email);
+  async verifyUserCredential({ email, password }) {
+    const { id, password: hashedPassword } = await this.usersRepository.getPasswordByEmail(email);
 
-    const match = await bcrypt.compare(password, body.password);
+    const match = await bcrypt.compare(password, hashedPassword);
 
     if (!match) {
-      throw new AuthenticationError('email or password wrong');
+      throw new AuthenticationError('verifyUserCredential: Credential is wrong or not match!');
     }
 
-    const idCategory = {
-      id: body.id,
-      category: body.category,
-    };
+    return id;
+  }
 
-    return idCategory;
+  async getUserById({ id }) {
+    const user = await this.usersRepository.getUserById(id);
+    return user;
+  }
+
+  async verifyRoleById({ id, role }) {
+    const { category } = await this.usersRepository.verifyRoleById(id);
+
+    if (category !== role) {
+      throw new AuthorizationError('verifyRoleById: Akses ditolak!');
+    }
+  }
+
+  async getOwnerNameById({ id }) {
+    const { owner } = await this.usersRepository.getOwnerNameById(id);
+    return owner;
   }
 }
 

@@ -37,6 +37,56 @@ class JobsRepository {
 
     await this.pool.query(query.text, query.values);
   }
+
+  async getJobs() {
+    const query = {
+      text: 'SELECT id, id_user as owner, title, description, tags FROM jobs WHERE draft = 0',
+    };
+
+    const [result] = await this.pool.query(query.text);
+
+    return result;
+  }
+
+  async getJobById(id) {
+    try {
+      const query = {
+        text: `SELECT jobs.title, jobs.description, users.name as owner, users.profile
+        FROM jobs 
+        INNER JOIN users ON users.id = jobs.id_user
+        WHERE jobs.id = ?`,
+        values: [id]
+      };
+
+      const [result] = await this.pool.query(
+        query.text,
+        query.values
+      );
+
+      console.log(result);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getImagesFromJobId(id) {
+    try {
+      const query = {
+        text: `SELECT file as url_images FROM job_files WHERE id_job = ?`,
+        values: [id]
+      };
+
+      const [result] = await this.pool.query(
+        query.text,
+        query.values
+      );
+
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }
 
 module.exports = JobsRepository;

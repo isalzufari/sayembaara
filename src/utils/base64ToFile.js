@@ -15,7 +15,7 @@ function extractBase64Info(base64String) {
   const formatType = mimeType.split('/')[1];
   const base64Data = matches[2];
 
-  const folderPath = `public/${folder}`;
+  const folderPath = `${folder}`;
 
   if (!fs.existsSync(folderPath)) {
     fs.mkdirSync(folderPath, { recursive: true });

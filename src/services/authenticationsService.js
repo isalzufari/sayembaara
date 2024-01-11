@@ -2,19 +2,19 @@ const AuthenticationsRepository = require('../repository/authenticationsReposito
 
 class AuthenticationsService {
   constructor() {
-    this.AuthenticationsRepository = new AuthenticationsRepository();
+    this.authenticationsRepository = new AuthenticationsRepository();
   }
 
   async addRefreshToken(token) {
-    this.AuthenticationsRepository.addRefreshToken(token);
+    this.authenticationsRepository.addRefreshToken(token);
   }
 
   async verifyRefreshToken(token) {
-    this.AuthenticationsRepository.verifyRefreshToken(token);
+    this.authenticationsRepository.verifyRefreshToken(token);
   }
 
   async deleteRefreshToken(token) {
-    this.AuthenticationsRepository.deleteRefreshToken(token);
+    this.authenticationsRepository.deleteRefreshToken(token);
   }
 }
 
