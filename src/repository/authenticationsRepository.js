@@ -13,10 +13,7 @@ class AuthenticationsRepository {
       values: [token],
     };
 
-    await this.pool.query(
-      query.text,
-      query.values,
-    );
+    await this.pool.query(query.text, query.values);
   }
 
   async verifyRefreshToken(token) {
@@ -25,10 +22,7 @@ class AuthenticationsRepository {
       values: [token],
     };
 
-    const [result] = await this.pool.query(
-      query.text,
-      query.values,
-    );
+    const [result] = await this.pool.query(query.text, query.values);
 
     if (result.length > 0) {
       throw new InvariantError('refresh token tidak valid');
@@ -41,10 +35,7 @@ class AuthenticationsRepository {
       values: [token],
     };
 
-    await this.pool.query(
-      query.text,
-      query.values,
-    );
+    await this.pool.query(query.text, query.values);
   }
 }
 

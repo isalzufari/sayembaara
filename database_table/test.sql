@@ -10,4 +10,7 @@ SELECT * FROM umkm;
 SELECT * FROM mahasiswa;
 SELECT * FROM authentications;
 
+SELECT * FROM jobs;
+SELECT * FROM job_files;
+
 DROP DATABASE sayembara;

@@ -15,9 +15,9 @@ class AuthenticationsHandler {
 
   async postAuthenticationHandler(request, h) {
     const { email, password } = request.payload;
-    const id = await this.usersService.login({ email, password });
+    const { id, category } = await this.usersService.login({ email, password });
 
-    const accessToken = this.tokenManager.generateAccessToken({ id });
+    const accessToken = this.tokenManager.generateAccessToken({ id, category });
     const refreshToken = this.tokenManager.generateRefreshToken({ id });
 
     await this.authenticationsService.addRefreshToken(refreshToken);

@@ -11,6 +11,7 @@ class UsersService {
     this.authorizationRepository = new AuthorizationRepository();
   }
 
+  // return an id (string)
   async addUser({
     name, email, password, category,
   }) {
@@ -30,6 +31,7 @@ class UsersService {
     return result;
   }
 
+  // return object of id (string) and category (string)
   async login({ email, password }) {
     const body = await this.usersRepository.getPasswordByEmail(email);
 
@@ -39,7 +41,12 @@ class UsersService {
       throw new AuthenticationError('email or password wrong');
     }
 
-    return body.id;
+    const idCategory = {
+      id: body.id,
+      category: body.category,
+    };
+
+    return idCategory;
   }
 }
 

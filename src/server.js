@@ -7,6 +7,7 @@ const ClientError = require('./exceptions/ClientError');
 
 const users = require('./api/users');
 const authentications = require('./api/authentications');
+const jobs = require('./api/jobs');
 
 async function init() {
   const server = Hapi.server({
@@ -37,6 +38,7 @@ async function init() {
       isValid: true,
       credentials: {
         id: artifacts.decoded.payload.id,
+        category: artifacts.decoded.payload.category,
       },
     }),
   });
@@ -48,16 +50,33 @@ async function init() {
     {
       plugin: authentications,
     },
+    {
+      plugin: jobs,
+    },
   ]);
 
   server.ext('onPreResponse', (request, h) => {
     const { response } = request;
 
-    if (response instanceof ClientError) {
+    if (response instanceof Error) {
+      if (response instanceof ClientError) {
+        const newResponse = h.response({
+          status: 'fail',
+          message: response.message,
+        });
+        newResponse.code(response.statusCode);
+        return newResponse;
+      }
+
+      if (!response.isServer) {
+        return h.continue;
+      }
+
       const newResponse = h.response({
-        message: response.message,
+        status: 'error',
+        message: 'terjadi kegagalan pada server kami',
       });
-      newResponse.code(response.statusCode);
+      newResponse.code(500);
       return newResponse;
     }
 

@@ -15,7 +15,7 @@ description: string
 deadline: int (epoch)
 reward: string, optional
 tag: string
-image: []string (base64, jpg)
+image: []string (base64, jpg) (example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA...)
 ```
 
 Response :
@@ -52,7 +52,7 @@ description: string, optional
 deadline: int (epoch), optional
 reward: string, optional
 tag: string, optional
-image: []string (base64, jpg), optional
+image: []string (base64, jpg), optional (example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA...)
 ```
 
 Response :
@@ -81,7 +81,7 @@ description: string
 deadline: int (epoch)
 reward: string, optional
 tag: string
-image: []string (base64, jpg)
+image: []string (base64, jpg) (example: data:image/png;base64,iVBORw0KGgoAAAANSUhEUgA...)
 ```
 
 Response :

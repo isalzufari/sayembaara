@@ -8,6 +8,7 @@ class UsersRepository {
     this.pool = pool.promise();
   }
 
+  // return an id (string)
   async addUser({
     name, email, password, profile, banner, category,
   }) {
@@ -49,26 +50,21 @@ class UsersRepository {
       values: [email],
     };
 
-    const [result] = await this.pool.query(
-      query.text,
-      query.values,
-    );
+    const [result] = await this.pool.query(query.text, query.values);
 
     if (result.length > 0) {
       throw new InvariantError('email is used');
     }
   }
 
+  // return object of id (string), password (string), and category (string)
   async getPasswordByEmail(email) {
     const query = {
       text: 'SELECT id, password, category FROM `users` WHERE email = ?',
       values: [email],
     };
 
-    const [result] = await this.pool.query(
-      query.text,
-      query.values,
-    );
+    const [result] = await this.pool.query(query.text, query.values);
 
     if (result.length === 0) {
       throw new InvariantError('email or password wrong');

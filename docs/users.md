@@ -43,7 +43,7 @@ HTTP Response 400
 
 not yet
 
-Endpoint : PUT /api/v1/users/:job_id
+Endpoint : PUT /api/v1/users/:user_id
 
 Headers:
 - Authorization: token
@@ -139,7 +139,7 @@ HTTP Response 200
 ## Get User Details API
 don\'t know how to serving the image 
 
-Endpoint: GET /api/v1/users/:job_id
+Endpoint: GET /api/v1/users/:user_id
 
 Response :
 - UMKM :
@@ -195,7 +195,7 @@ HTTP Response 200
 
 ## Post a Request to get Verified
 
-Endpoint: POST /api/v1/users/:job_id/verified
+Endpoint: POST /api/v1/users/:user_id/verified
 
 Headers:
 - Authorization: token
@@ -210,7 +210,7 @@ HTTP Response 200
 
 ## Post a Request to get Expert Badge
 
-Endpoint: POST /api/v1/users/:job_id/expert
+Endpoint: POST /api/v1/users/:user_id/expert
 
 Headers:
 - Authorization: token
