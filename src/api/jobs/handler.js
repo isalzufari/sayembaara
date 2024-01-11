@@ -9,6 +9,7 @@ class UsersHandler {
     this.postJobHandler = this.postJobHandler.bind(this);
     this.getJobsHandler = this.getJobsHandler.bind(this);
     this.getJobHandler = this.getJobHandler.bind(this);
+    this.putDraftHandler = this.putDraftHandler.bind(this);
   }
 
   async getJobsHandler(request, h) {
@@ -77,6 +78,18 @@ class UsersHandler {
     });
     response.code(201);
     return response;
+  }
+
+  async putDraftHandler(request, h) {
+    const { id: userId } = request.auth.credentials;
+    const { id: jobId } = request.params;
+
+    await this._jobsService.updateIsDraft({ userId, jobId });
+
+    return h.response({
+      status: 'success',
+      message: 'Job berhasil diubah',
+    }).code(200);
   }
 }
 

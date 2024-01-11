@@ -4,7 +4,7 @@ const idGenerator = require('../utils/idGenerator');
 
 class JobsRepository {
   constructor() {
-    this.pool = pool.promise();
+    this._pool = pool.promise();
   }
 
   // return an id (string)
@@ -18,7 +18,7 @@ class JobsRepository {
       values: [id, userId, title, description, tag, deadline, reward, draft],
     };
 
-    await this.pool.query(query.text, query.values);
+    await this._pool.query(query.text, query.values);
 
     for (let i = 0; i < image.length; i++) {
       this.uploadAnImageLoop(id, image[i]);
@@ -35,7 +35,7 @@ class JobsRepository {
       values: [fileId, id, image],
     };
 
-    await this.pool.query(query.text, query.values);
+    await this._pool.query(query.text, query.values);
   }
 
   async getJobs() {
@@ -43,7 +43,7 @@ class JobsRepository {
       text: 'SELECT id, id_user as owner, title, description, tags FROM jobs WHERE draft = 0',
     };
 
-    const [result] = await this.pool.query(query.text);
+    const [result] = await this._pool.query(query.text);
 
     return result;
   }
@@ -58,7 +58,7 @@ class JobsRepository {
         values: [id]
       };
 
-      const [result] = await this.pool.query(
+      const [result] = await this._pool.query(
         query.text,
         query.values
       );
@@ -77,7 +77,7 @@ class JobsRepository {
         values: [id]
       };
 
-      const [result] = await this.pool.query(
+      const [result] = await this._pool.query(
         query.text,
         query.values
       );
@@ -86,6 +86,32 @@ class JobsRepository {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async getIsDraftById(id) {
+    const query = {
+      text: 'SELECT `draft` as isDraft FROM jobs WHERE id = ?',
+      values: [id],
+    };
+
+    const result = await this._pool.query(
+      query.text,
+      query.values,
+    );
+
+    return result[0][0];
+  }
+
+  async updateIsDraft({ updateIsDraft, userId, jobId }) {
+    const query = {
+      text: 'UPDATE `jobs` SET draft = ? WHERE id = ?',
+      values: [updateIsDraft, jobId],
+    };
+
+    await this._pool.query(
+      query.text,
+      query.values,
+    );
   }
 }
 

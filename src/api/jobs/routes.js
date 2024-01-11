@@ -17,6 +17,14 @@ const routes = (handler) => [
     path: '/{id}',
     handler: handler.getJobHandler,
   },
+  {
+    method: 'PUT',
+    path: '/{id}/draft',
+    handler: handler.putDraftHandler,
+    options: {
+      auth: 'sayembara_jwt',
+    },
+  },
 ];
 
 module.exports = routes;

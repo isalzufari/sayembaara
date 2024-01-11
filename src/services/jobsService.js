@@ -48,6 +48,12 @@ class JobsService {
     const result = await this.jobsRepository.getImagesFromJobId(id);
     return result;
   }
+
+  async updateIsDraft({ userId, jobId }) {
+    const { isDraft } = await this.jobsRepository.getIsDraftById(jobId);
+    const updateIsDraft = isDraft === 0 ? 1 : 0;
+    await this.jobsRepository.updateIsDraft({ updateIsDraft, userId, jobId });
+  }
 }
 
 module.exports = JobsService;
