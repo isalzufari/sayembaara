@@ -14,8 +14,10 @@
   "dependencies": {
     "@hapi/hapi": "^21.3.2",
     "@hapi/jwt": "^3.2.0",
+    "base64-img": "^1.0.4",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
+    "is-base64": "^1.1.0",
     "mysql2": "^3.7.0"
   },
   "devDependencies": {

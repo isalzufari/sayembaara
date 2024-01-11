@@ -1,5 +1,5 @@
 const JobsRepository = require('../repository/jobsRepository');
-const extractBase64Info = require('../utils/base64ToFile');
+const Base64ToImg = require('../utils/Base64ToImg');
 
 class JobsService {
   constructor() {
@@ -13,8 +13,8 @@ class JobsService {
 
     // mengubah base64 menjadi image dan mengembalikan path images
     for (let i = 0; i < image.length; i++) {
-      const filePath = extractBase64Info(image[i]);
-      image[i] = filePath;
+      const filePath = await Base64ToImg(image[i]);
+      image[i] = `images/${filePath}`;
     }
 
     const jobCreated = {

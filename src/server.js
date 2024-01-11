@@ -19,10 +19,14 @@ const TokenManager = require('./tokenize/tokenManager');
 const jobs = require('./api/jobs');
 const JobsService = require('./services/jobsService');
 
+const search = require('./api/search');
+const SearchService = require('./services/searchService');
+
 async function init() {
   const usersService = new UsersService();
   const authenticationsService = new AuthenticationsService();
   const jobsService = new JobsService();
+  const searchService = new SearchService();
 
   const server = Hapi.server({
     host: process.env.HOST,
@@ -69,10 +73,10 @@ async function init() {
     },
     {
       method: 'GET',
-      path: '/image/{param*}',
+      path: '/images/{param*}',
       handler: {
         directory: {
-          path: Path.resolve('./public/image'),
+          path: Path.resolve('./public/images'),
         },
       },
     },
@@ -135,6 +139,15 @@ async function init() {
       },
       routes: {
         prefix: '/api/v1/jobs',
+      },
+    },
+    {
+      plugin: search,
+      options: {
+        searchService
+      },
+      routes: {
+        prefix: '/api/v1/search',
       },
     },
   ]);

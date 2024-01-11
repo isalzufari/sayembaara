@@ -1,14 +1,12 @@
 const bcrypt = require('bcrypt');
 
 const UsersRepository = require('../repository/usersRepository');
-const AuthorizationRepository = require('../repository/authenticationsRepository');
 const AuthenticationError = require('../exceptions/AuthenticationError');
 const AuthorizationError = require('../exceptions/AuthorizationError');
 
 class UsersService {
   constructor() {
     this.usersRepository = new UsersRepository();
-    this.authorizationRepository = new AuthorizationRepository();
   }
 
   // return an id (string)
