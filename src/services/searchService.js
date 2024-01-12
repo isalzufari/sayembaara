@@ -7,16 +7,14 @@ class SearchService {
 
   async searchData({ q, category }) {
     const query = {
-      text: 'SELECT id, name, profile FROM users WHERE category = ? AND name LIKE ?',
-      values: [category, '%' + q + '%']
+      text: 'SELECT id, name, profile FROM users WHERE category LIKE ? AND name LIKE ?',
+      values: ['%' + category + '%', '%' + q + '%']
     };
 
     const [result] = await this._pool.query(
       query.text,
       query.values
     );
-
-    console.log(result)
 
     return result;
   }

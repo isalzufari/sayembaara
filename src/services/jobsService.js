@@ -54,6 +54,11 @@ class JobsService {
     const updateIsDraft = isDraft === 0 ? 1 : 0;
     await this.jobsRepository.updateIsDraft({ updateIsDraft, userId, jobId });
   }
+
+  async getJobsByUmkmById({ userId }) {
+    const result = await this.jobsRepository.getJobsByUmkmById(userId);
+    return result;
+  }
 }
 
 module.exports = JobsService;

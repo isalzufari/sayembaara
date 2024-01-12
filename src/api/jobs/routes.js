@@ -5,6 +5,9 @@ const routes = (handler) => [
     handler: handler.postJobHandler,
     options: {
       auth: 'sayembara_jwt',
+      payload: {
+        maxBytes: 1000 * 1000 * 5, // 5 Mb
+      }
     },
   },
   {
@@ -21,6 +24,14 @@ const routes = (handler) => [
     method: 'PUT',
     path: '/{id}/draft',
     handler: handler.putDraftHandler,
+    options: {
+      auth: 'sayembara_jwt',
+    },
+  },
+  {
+    method: 'GET',
+    path: '/umkm',
+    handler: handler.getJobsByUmkmHandler,
     options: {
       auth: 'sayembara_jwt',
     },

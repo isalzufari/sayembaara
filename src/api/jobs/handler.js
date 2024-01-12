@@ -10,6 +10,7 @@ class UsersHandler {
     this.getJobsHandler = this.getJobsHandler.bind(this);
     this.getJobHandler = this.getJobHandler.bind(this);
     this.putDraftHandler = this.putDraftHandler.bind(this);
+    this.getJobsByUmkmHandler = this.getJobsByUmkmHandler.bind(this);
   }
 
   async getJobsHandler(request, h) {
@@ -19,6 +20,7 @@ class UsersHandler {
       status: 'success',
       data: await Promise.all(jobs.map(async (job) => ({
         ...job,
+        url_images: `http://${request.headers.host}/${job.url_images}`,
         owner: await this._usersService.getOwnerNameById({ id: job.owner }),
       }))),
     });
@@ -90,6 +92,26 @@ class UsersHandler {
       status: 'success',
       message: 'Job berhasil diubah',
     }).code(200);
+  }
+
+  async getJobsByUmkmHandler(request, h) {
+    const { id: userId } = request.auth.credentials;
+
+    const jobs = await this._jobsService.getJobsByUmkmById({ userId });
+
+    const data = jobs.map((job) => ({
+      ...job,
+      url_images: `http://${request.headers.host}/${job.url_images}`
+    }));
+
+    // console.log(jobs);
+
+    const response = h.response({
+      status: 'success',
+      data
+    });
+    response.code(200);
+    return response;
   }
 }
 

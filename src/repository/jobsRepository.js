@@ -40,7 +40,11 @@ class JobsRepository {
 
   async getJobs() {
     const query = {
-      text: 'SELECT id, id_user as owner, title, description, tags FROM jobs WHERE draft = 0',
+      text: `SELECT jobs.id, jobs.id_user as owner, jobs.title, jobs.description, jobs.tags, job_files.file as url_images
+      FROM jobs
+      INNER JOIN job_files ON jobs.id = job_files.id_job
+      WHERE jobs.draft = 0
+      GROUP BY jobs.id`,
     };
 
     const [result] = await this._pool.query(query.text);
@@ -112,6 +116,26 @@ class JobsRepository {
       query.text,
       query.values,
     );
+  }
+
+  async getJobsByUmkmById(userId) {
+    console.log(userId);
+    try {
+      const query = {
+        text: `SELECT users.name as owner, jobs.id, jobs.title, jobs.draft as isDraft, job_files.file as url_images
+        FROM jobs 
+        INNER JOIN job_files ON jobs.id = job_files.id_job
+        INNER JOIN users ON users.id = jobs.id_user
+        WHERE jobs.id_user = ?
+        GROUP BY jobs.id`,
+        values: [userId]
+      };
+
+      const [result] = await this._pool.query(query.text, query.values);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
