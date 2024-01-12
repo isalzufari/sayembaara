@@ -1,12 +1,13 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-const Navigation = () => {
+const Navigation = ({ authUser, onSignOut }) => {
+  console.log(authUser);
   const location = useLocation();
+  const navigate = useNavigate();
   const locationSplit = location.pathname.split('/');
   const slug = locationSplit[1];
-
-  console.log(slug)
 
   return (
     <nav class="navbar bg-light fixed-top">
@@ -24,43 +25,50 @@ const Navigation = () => {
           </>
           :
           <>
-            <Link to="/" className="navbar-toggler" type="button">
+            <a onClick={(e) => navigate(-1)} className="navbar-toggler" type="button">
               <i class="bi bi-arrow-left"></i>
-            </Link>
-            <a class="navbar-brand" href="#">{slug}</a>
+            </a>
+            <a class="navbar-brand" href="#/">{slug}</a>
           </>
         }
 
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-          <div class="offcanvas-header">
+        <div class="offcanvas offcanvas-start" style={{ width: '250px' }} tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+          <div class="offcanvas-header shadow-sm">
             <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Sayembara</h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li class="nav-item">
-                <Link to="/" className={`nav-link ${slug === '' && 'active'}`} aria-current="page" href="#">Home</Link>
-              </li>
-              <li class="nav-item">
-                <Link to="/profile" class={`nav-link ${slug === 'profile' && 'active'}`} href="#">Profile</Link>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Dropdown
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li>
-                    <hr class="dropdown-divider" />
+            {authUser ?
+              <>
+                <div class="d-flex justify-content-between mb-3">
+                  <img src={authUser?.profile} alt={authUser?.name} className='rounded-circle' />
+                  <p>{authUser?.name}</p>
+                </div>
+                <Link to="/umkm/job/upload" class="btn btn-outline-primary w-100" type="button">+ Buat Sayembara</Link>
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                  <li class="nav-item">
+                    <Link to="/" className={`nav-link ${slug === '' && 'active'}`} aria-current="page" href="#">Beranda</Link>
                   </li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  <hr></hr>
+                  <li class="nav-item dropdown">
+                    <a class={`nav-link ${slug === 'profile' && 'active'} dropdown-toggle`} href="#/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Profil
+                    </a>
+                    <ul class="dropdown-menu mb-3">
+                      <li><Link to="/umkm/job/list" class="dropdown-item">Sayembara Terunggah</Link></li>
+                      <li><Link to="/profile" class="dropdown-item">Edit Profil</Link></li>
+                      <li><a class="dropdown-item" href="#/">Ajukan Verifikasi</a></li>
+                    </ul>
+                  </li>
                 </ul>
-              </li>
-            </ul>
-
-            <button class="btn btn-outline-primary" type="submit">Logout</button>
-
+                <hr></hr>
+                <button onClick={onSignOut} class="btn btn-outline-primary" type="button">Logout</button>
+              </>
+              :
+              <>
+                <Link className='btn btn-primary w-100' to="login">Login</Link>
+              </>
+            }
           </div>
         </div>
       </div>

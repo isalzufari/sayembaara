@@ -1,20 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom';
+import api from '../utils/api';
 
-const Home = () => {
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      name: "Landing Page - Website Bisnis",
-      description: "Membuat website bisnis untuk usaha saya dengan kriteria yaitu",
-      tag: ['Web Development']
-    },
-    {
-      id: 2,
-      name: "Landing Page - Website Judol",
-      description: "Membuat website bisnis untuk Bisnis",
-      tag: ['Web Development']
+const Home = ({ authUser }) => {
+  const [jobs, setJobs] = useState([]);
+
+  useEffect(() => {
+    const getJobs = async () => {
+      const jobs = await api.getJobs();
+      setJobs(jobs)
+      console.log(authUser)
     }
-  ]);
+    getJobs();
+    return () => {
+
+    };
+  }, []);
+
   return (
     <>
       <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
@@ -39,17 +41,31 @@ const Home = () => {
         </button>
       </div>
 
-      <button className='btn btn-primary w-100 my-3'>+ Buat Sayembara</button>
+      {authUser ?
+        <>
+          <Link to="/umkm/job/upload" className='btn btn-primary w-100 my-3'>+ Buat Sayembara</Link>
+        </>
+        :
+        <>
+          <p className='my-3'>Sudah Daftar Belum?</p>
+        </>
+      }
 
       <div className="row">
         {jobs.map((job, key) => (
-          <div className='col-12'>
+          <div className='col-12' key={key}>
             <div class="card mb-3 shadow">
-              <img src="https://placehold.co/600x400" class="card-img-top" alt="..." />
+              <img src={job.url_images} style={{ height: 50 }} class="card-img-top object-fit-cover" alt="..." />
               <div class="card-body">
-                <h5 class="card-title">{job.name}</h5>
+                <div className='d-flex justify-content-between'>
+                  <p>{job.owner}</p>
+                  <div>
+                    <span class="badge rounded-pill text-bg-primary">#{job.tags}</span>
+                  </div>
+                </div>
+                <h5 class="card-title">{job.title}</h5>
                 <p class="card-text">{job.description}</p>
-                <a href="#/" class="btn btn-primary">{job.id}</a>
+                <Link to={`/umkm/job/${job.id}`} class="btn btn-primary w-100">Lihat Detail</Link>
               </div>
             </div>
           </div>
