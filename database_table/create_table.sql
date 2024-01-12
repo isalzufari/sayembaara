@@ -69,7 +69,7 @@ CREATE TABLE jobs
   title VARCHAR(255),
   description TEXT,
   tags VARCHAR(255),
-  deadline BIGINT,
+  deadline VARCHAR(255),
   reward VARCHAR(255),
   draft BOOLEAN NOT NULL DEFAULT (true),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -83,4 +83,15 @@ CREATE TABLE job_files
   id_job VARCHAR(255) NOT NULL,
   file VARCHAR(255),
   FOREIGN KEY (id_job) REFERENCES jobs (id)
+);
+
+CREATE TABLE job_comments
+(
+  id VARCHAR(255) PRIMARY KEY,
+  id_user VARCHAR(255) NOT NULL,
+  id_job VARCHAR(255) NOT NULL,
+  message TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_job) REFERENCES jobs (id),
+  FOREIGN KEY (id_user) REFERENCES users (id)
 );

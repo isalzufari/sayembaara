@@ -22,11 +22,14 @@ const JobsService = require('./services/jobsService');
 const search = require('./api/search');
 const SearchService = require('./services/searchService');
 
+const CommentsService = require('./services/commentsService');
+
 async function init() {
   const usersService = new UsersService();
   const authenticationsService = new AuthenticationsService();
   const jobsService = new JobsService();
   const searchService = new SearchService();
+  const commentsService = new CommentsService();
 
   const server = Hapi.server({
     host: process.env.HOST,
@@ -135,7 +138,8 @@ async function init() {
       plugin: jobs,
       options: {
         jobsService,
-        usersService
+        usersService,
+        commentsService
       },
       routes: {
         prefix: '/api/v1/jobs',

@@ -2,15 +2,17 @@
 const ROLES = require('../../utils/rolesENUM');
 
 class UsersHandler {
-  constructor(jobsService, usersService) {
+  constructor(jobsService, usersService, commentsService) {
     this._jobsService = jobsService;
     this._usersService = usersService
+    this._commentsService = commentsService;
 
     this.postJobHandler = this.postJobHandler.bind(this);
     this.getJobsHandler = this.getJobsHandler.bind(this);
     this.getJobHandler = this.getJobHandler.bind(this);
     this.putDraftHandler = this.putDraftHandler.bind(this);
     this.getJobsByUmkmHandler = this.getJobsByUmkmHandler.bind(this);
+    this.postCommentJobHandler = this.postCommentJobHandler.bind(this);
   }
 
   async getJobsHandler(request, h) {
@@ -32,7 +34,9 @@ class UsersHandler {
     const { id } = request.params;
 
     const detailJob = await this._jobsService.getJobById({ id });
-    const images = await this._jobsService.getImagesFromJobId({ id })
+    const images = await this._jobsService.getImagesFromJobId({ id });
+    const comments = await this._commentsService.getJobCommets(id);
+    console.log(comments);
 
     const mappedImages = images.map((image) => ({
       url_images: `http://${request.headers.host}/${image.url_images}`
@@ -41,6 +45,7 @@ class UsersHandler {
     const mappedJob = detailJob.map((job) => ({
       ...job,
       images: mappedImages,
+      comments: comments
     }));
 
     const response = h.response({
@@ -111,6 +116,23 @@ class UsersHandler {
       data
     });
     response.code(200);
+    return response;
+  }
+
+  async postCommentJobHandler(request, h) {
+    const { id: userId } = request.auth.credentials;
+    const { id: jobId } = request.params;
+    const { message } = request.payload;
+    
+    const commentId = await this._commentsService.addJobComment(userId, jobId, message);
+
+    const response = h.response({
+      status: 'success',
+      data: {
+        commentId,
+      },
+    });
+    response.code(201);
     return response;
   }
 }
