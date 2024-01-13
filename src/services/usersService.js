@@ -50,7 +50,7 @@ class UsersService {
 
   async verifyRoleById({ id, role }) {
     const { category } = await this.usersRepository.verifyRoleById(id);
-
+    
     if (category !== role) {
       throw new AuthorizationError('verifyRoleById: Akses ditolak!');
     }

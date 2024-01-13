@@ -22,7 +22,11 @@ const JobsService = require('./services/jobsService');
 const search = require('./api/search');
 const SearchService = require('./services/searchService');
 
+const comments = require('./api/comments');
 const CommentsService = require('./services/commentsService');
+
+const results = require('./api/results');
+const ResultsService = require('./services/resultsService');
 
 async function init() {
   const usersService = new UsersService();
@@ -30,6 +34,7 @@ async function init() {
   const jobsService = new JobsService();
   const searchService = new SearchService();
   const commentsService = new CommentsService();
+  const resultsService = new ResultsService();
 
   const server = Hapi.server({
     host: process.env.HOST,
@@ -139,7 +144,8 @@ async function init() {
       options: {
         jobsService,
         usersService,
-        commentsService
+        commentsService,
+        resultsService
       },
       routes: {
         prefix: '/api/v1/jobs',
@@ -152,6 +158,25 @@ async function init() {
       },
       routes: {
         prefix: '/api/v1/search',
+      },
+    },
+    {
+      plugin: comments,
+      options: {
+        commentsService
+      },
+      routes: {
+        prefix: '/api/v1/jobs/{jobId}/comments',
+      },
+    },
+    {
+      plugin: results,
+      options: {
+        usersService,
+        resultsService
+      },
+      routes: {
+        prefix: '/api/v1/jobs/{jobId}/results',
       },
     },
   ]);

@@ -13,7 +13,6 @@ class CommentsService {
 
   async getJobCommets(id) {
     const comments = await this.commentsRepository.getCommentsByJobId(id);
-    console.log(comments)
     return comments
   }
 }

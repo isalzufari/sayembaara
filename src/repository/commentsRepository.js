@@ -29,7 +29,7 @@ class CommentsRepository {
       ORDER BY job_comments.created_at DESC`,
       values: [jobId]
     };
-    console.log(query);
+    
     const [result] = await this._pool.query(query.text, query.values);
     
     return result;
