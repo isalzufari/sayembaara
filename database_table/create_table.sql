@@ -69,7 +69,7 @@ CREATE TABLE jobs
   title VARCHAR(255),
   description TEXT,
   tags VARCHAR(255),
-  deadline VARCHAR(255),
+  deadline TIMESTAMP,
   reward VARCHAR(255),
   draft BOOLEAN NOT NULL DEFAULT (true),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,

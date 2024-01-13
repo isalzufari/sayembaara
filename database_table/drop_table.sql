@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS job_comments;
+
 DROP TABLE IF EXISTS job_files;
 
 DROP TABLE IF EXISTS jobs;
