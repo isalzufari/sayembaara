@@ -62,11 +62,11 @@ class ResultsHandler {
     console.log(comments)
 
     const resultMapped = {
-      id: result[0].id,
-      owner: result[0].owner,
-      profile: result[0].profile,
-      file: `http://${request.headers.host}/${result[0].file}`,
-      title: result[0].title,
+      id: result.id,
+      owner: result.owner,
+      profile: result.profile,
+      file: `http://${request.headers.host}/${result.file}`,
+      title: result.title,
       description: result.description,
       comments: comments,
     }

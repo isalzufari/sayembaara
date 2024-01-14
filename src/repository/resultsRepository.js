@@ -46,7 +46,7 @@ class ResultsRepository {
     
     const [result] = await this._pool.query(query.text, query.values);
     
-    return result;
+    return result[0];
   }
 }
 
