@@ -15,6 +15,18 @@ class CommentsService {
     const comments = await this.commentsRepository.getCommentsByJobId(id);
     return comments
   }
+
+  async addResultComment(userId, resultId, message) {
+    const commentId = await this.commentsRepository.addResultComment({ message, userId, resultId });
+
+    return commentId;
+  }
+
+  async getResultComments(id) {
+    console.log(id)
+    const comments = await this.commentsRepository.getCommentsByResultId(id);
+    return comments
+  }
 }
 
 module.exports = CommentsService;

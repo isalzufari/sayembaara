@@ -10,6 +10,19 @@ const routes = (handler) => [
       }
     },
   },
+  {
+    method: 'POST',
+    path: '/{resultId}/comments',
+    handler: handler.postCommentResultHandler,
+    options: {
+      auth: 'sayembara_jwt',
+    },
+  },
+  {
+    method: 'GET',
+    path: '/{resultId}',
+    handler: handler.getResultByIdHandler,
+  },
 ];
 
 module.exports = routes;

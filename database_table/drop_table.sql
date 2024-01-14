@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS result_comments;
+
 DROP TABLE IF EXISTS job_results;
 
 DROP TABLE IF EXISTS job_comments;

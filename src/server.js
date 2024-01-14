@@ -22,7 +22,6 @@ const JobsService = require('./services/jobsService');
 const search = require('./api/search');
 const SearchService = require('./services/searchService');
 
-const comments = require('./api/comments');
 const CommentsService = require('./services/commentsService');
 
 const results = require('./api/results');
@@ -161,19 +160,11 @@ async function init() {
       },
     },
     {
-      plugin: comments,
-      options: {
-        commentsService
-      },
-      routes: {
-        prefix: '/api/v1/jobs/{jobId}/comments',
-      },
-    },
-    {
       plugin: results,
       options: {
         usersService,
-        resultsService
+        resultsService,
+        commentsService
       },
       routes: {
         prefix: '/api/v1/jobs/{jobId}/results',

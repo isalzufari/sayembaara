@@ -2,11 +2,14 @@
 const ROLES = require('../../utils/rolesENUM');
 
 class ResultsHandler {
-  constructor(usersService, resultsService) {
+  constructor(usersService, resultsService, commentsService) {
     this._usersService = usersService
     this._resultsService = resultsService;
+    this._commentsService = commentsService
 
     this.postResultHandler = this.postResultHandler.bind(this);
+    this.postCommentResultHandler = this.postCommentResultHandler.bind(this);
+    this.getResultByIdHandler = this.getResultByIdHandler.bind(this);
   }
 
   async postResultHandler(request, h) {
@@ -30,6 +33,51 @@ class ResultsHandler {
       },
     });
     response.code(201);
+    return response;
+  }
+
+  async postCommentResultHandler(request, h) {
+    const { id: userId } = request.auth.credentials;
+    const { resultId } = request.params;
+    const { message } = request.payload;
+    
+    const commentId = await this._commentsService.addResultComment(userId, resultId, message);
+
+    const response = h.response({
+      status: 'success',
+      data: {
+        commentId,
+      },
+    });
+    response.code(201);
+    return response;
+  }
+
+  async getResultByIdHandler(request, h) {
+    const { resultId } = request.params;
+    
+    const result = await this._resultsService.getResultById(resultId);
+    console.log(result)
+    const comments = await this._commentsService.getResultComments(resultId);
+    console.log(comments)
+
+    const resultMapped = {
+      id: result.id,
+      owner: result.owner,
+      profile: result.profile,
+      file: `http://${request.headers.host}/${result.file}`,
+      title: result.title,
+      description: result.description,
+      comments: comments,
+    }
+
+    const response = h.response({
+      status: 'success',
+      data: {
+        resultMapped,
+      },
+    });
+    response.code(200);
     return response;
   }
 }

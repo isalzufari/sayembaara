@@ -12,6 +12,7 @@ class UsersHandler {
     this.getJobHandler = this.getJobHandler.bind(this);
     this.putDraftHandler = this.putDraftHandler.bind(this);
     this.getJobsByUmkmHandler = this.getJobsByUmkmHandler.bind(this);
+    this.postCommentJobHandler = this.postCommentJobHandler.bind(this);
   }
 
   async getJobsHandler(request, h) {
@@ -42,11 +43,18 @@ class UsersHandler {
       url_images: `http://${request.headers.host}/${image.url_images}`
     }));
 
+    const mappedResults = results.map((result) => ({
+      id: result.id,
+      owner: result.owner,
+      file: `http://${request.headers.host}/${result.file}`,
+      title: result.title
+    }));
+
     const mappedJob = detailJob.map((job) => ({
       ...job,
       images: mappedImages,
       comments: comments,
-      results: results
+      results: mappedResults
     }));
 
     const response = h.response({
@@ -117,6 +125,23 @@ class UsersHandler {
       data
     });
     response.code(200);
+    return response;
+  }
+
+  async postCommentJobHandler(request, h) {
+    const { id: userId } = request.auth.credentials;
+    const { id: jobId } = request.params;
+    const { message } = request.payload;
+    
+    const commentId = await this._commentsService.addJobComment(userId, jobId, message);
+
+    const response = h.response({
+      status: 'success',
+      data: {
+        commentId,
+      },
+    });
+    response.code(201);
     return response;
   }
 }

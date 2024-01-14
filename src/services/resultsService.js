@@ -21,8 +21,13 @@ class ResultsService {
   }
 
   async getJobResults(id) {
-    const comments = await this._resultRepository.getResultsByJobId(id);
-    return comments
+    const results = await this._resultRepository.getResultsByJobId(id);
+    return results
+  }
+
+  async getResultById(id) {
+    const result = await this._resultRepository.getResultById(id);
+    return result;
   }
 }
 

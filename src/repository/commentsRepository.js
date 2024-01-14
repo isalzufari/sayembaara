@@ -34,6 +34,35 @@ class CommentsRepository {
     
     return result;
   }
+
+  async addResultComment({ message, userId, resultId }) {
+    const id = idGenerator();
+
+    const query = {
+      text: 'INSERT INTO result_comments(id, id_user, id_result, message) VALUES (?, ?, ?, ?)',
+      values: [id, userId, resultId, message],
+    };
+
+    await this._pool.query(query.text, query.values);
+
+    return id;
+  }
+
+  async getCommentsByResultId(jobId) {
+    const query = {
+      text: `SELECT result_comments.id, users.name as owner, users.profile, result_comments.message
+      FROM result_comments
+      INNER JOIN job_results ON job_results.id = result_comments.id_result
+      INNER JOIN users ON users.id = result_comments.id_user
+      WHERE result_comments.id_result = '36971720'
+      ORDER BY result_comments.created_at DESC`,
+      values: [jobId]
+    };
+    
+    const [result] = await this._pool.query(query.text, query.values);
+    
+    return result;
+  }
 }
 
 module.exports = CommentsRepository

@@ -36,6 +36,14 @@ const routes = (handler) => [
       auth: 'sayembara_jwt',
     },
   },
+  {
+    method: 'POST',
+    path: '/{id}/comments',
+    handler: handler.postCommentJobHandler,
+    options: {
+      auth: 'sayembara_jwt',
+    }, 
+  }
 ];
 
 module.exports = routes;

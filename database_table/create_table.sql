@@ -109,3 +109,14 @@ CREATE TABLE job_results
   FOREIGN KEY (id_job) REFERENCES jobs (id),
   FOREIGN KEY (id_user) REFERENCES users (id) 
 );
+
+CREATE TABLE result_comments
+(
+  id VARCHAR(255) PRIMARY KEY,
+  id_user VARCHAR(255) NOT NULL,
+  id_result VARCHAR(255) NOT NULL,
+  message TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_result) REFERENCES job_results (id),
+  FOREIGN KEY (id_user) REFERENCES users (id)
+);

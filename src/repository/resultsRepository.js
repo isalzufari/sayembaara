@@ -34,6 +34,20 @@ class ResultsRepository {
     
     return result;
   }
+
+  async getResultById(resultId) {
+    const query = {
+      text: `SELECT job_results.id, users.name as owner, users.profile as profile, job_results.file, job_results.title, job_results.description
+      FROM job_results
+      INNER JOIN users ON users.id = job_results.id_user
+      WHERE job_results.id = ?`,
+      values: [resultId]
+    };
+    
+    const [result] = await this._pool.query(query.text, query.values);
+    
+    return result;
+  }
 }
 
 module.exports = ResultsRepository;
