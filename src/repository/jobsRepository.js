@@ -1,5 +1,6 @@
 /* eslint-disable no-restricted-syntax */
 const pool = require('../db/pool');
+const AuthorizationError = require('../exceptions/AuthorizationError');
 const idGenerator = require('../utils/idGenerator');
 
 class JobsRepository {
@@ -136,6 +137,24 @@ class JobsRepository {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async ownerJob(jobId, userId) {
+    const query = {
+      text: 'SELECT id FROM `jobs` WHERE id_user = ? AND id = ?',
+      values: [userId, jobId],
+    };
+
+    const [result] = await this._pool.query(
+      query.text,
+      query.values
+    );
+
+    if (result.length === 0 && result.length > 1) {
+      throw new AuthorizationError('ownerJob: no job with this account');
+    }
+
+    return result[0];
   }
 }
 

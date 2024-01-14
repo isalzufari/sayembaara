@@ -47,7 +47,8 @@ class UsersHandler {
       id: result.id,
       owner: result.owner,
       file: `http://${request.headers.host}/${result.file}`,
-      title: result.title
+      title: result.title,
+      isChoose: result.isChoose
     }));
 
     const mappedJob = detailJob.map((job) => ({

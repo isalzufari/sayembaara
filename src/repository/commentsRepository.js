@@ -54,7 +54,7 @@ class CommentsRepository {
       FROM result_comments
       INNER JOIN job_results ON job_results.id = result_comments.id_result
       INNER JOIN users ON users.id = result_comments.id_user
-      WHERE result_comments.id_result = '36971720'
+      WHERE result_comments.id_result = ?
       ORDER BY result_comments.created_at DESC`,
       values: [jobId]
     };

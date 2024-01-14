@@ -41,3 +41,17 @@ SELECT result_comments.id, users.name as owner, users.profile, result_comments.m
       INNER JOIN users ON users.id = result_comments.id_user
       WHERE result_comments.id_result = '36971720'
       ORDER BY result_comments.created_at DESC
+
+SELECT job_results.id, users.name as owner, job_results.file, job_results.title, job_results.is_choose as choose
+      FROM job_results
+      INNER JOIN jobs ON jobs.id = job_results.id_job
+      INNER JOIN users ON users.id = job_results.id_user
+      WHERE job_results.id_job = '75170099'
+      ORDER BY job_results.is_choose, job_results.created_at ASC
+
+SELECT job_results.id, users.name as owner, job_results.file, job_results.title, job_results.is_choose as isChoose
+      FROM job_results
+      INNER JOIN jobs ON jobs.id = job_results.id_job
+      INNER JOIN users ON users.id = job_results.id_user
+      WHERE job_results.id_job = '11652657'
+      ORDER BY job_results.is_choose DESC, job_results.created_at DESC;

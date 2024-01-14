@@ -23,6 +23,14 @@ const routes = (handler) => [
     path: '/{resultId}',
     handler: handler.getResultByIdHandler,
   },
+  {
+    method: 'POST',
+    path: '/{resultId}/choosen',
+    handler: handler.choosenResult,
+    options: {
+      auth: 'sayembara_jwt',
+    },
+  },
 ];
 
 module.exports = routes;

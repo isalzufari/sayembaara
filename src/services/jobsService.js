@@ -59,6 +59,13 @@ class JobsService {
     const result = await this.jobsRepository.getJobsByUmkmById(userId);
     return result;
   }
+
+  async ownerJob(jobId, userId) {
+    console.log(jobId, userId)
+    const result = await this.jobsRepository.ownerJob(jobId, userId);
+    console.log(result)
+    return result;
+  }
 }
 
 module.exports = JobsService;

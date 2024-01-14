@@ -164,7 +164,8 @@ async function init() {
       options: {
         usersService,
         resultsService,
-        commentsService
+        commentsService,
+        jobsService
       },
       routes: {
         prefix: '/api/v1/jobs/{jobId}/results',

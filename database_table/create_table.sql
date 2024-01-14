@@ -104,6 +104,7 @@ CREATE TABLE job_results
   title VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   file VARCHAR(255),
+  is_choose BOOLEAN NOT NULL DEFAULT (false),
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   FOREIGN KEY (id_job) REFERENCES jobs (id),
@@ -119,4 +120,13 @@ CREATE TABLE result_comments
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (id_result) REFERENCES job_results (id),
   FOREIGN KEY (id_user) REFERENCES users (id)
+);
+
+CREATE TABLE results_choosen
+(
+  id VARCHAR(255) PRIMARY KEY,
+  id_job VARCHAR(255) NOT NULL,
+  id_result VARCHAR(255) NOT NULL,
+  FOREIGN KEY (id_result) REFERENCES job_results (id),
+  FOREIGN KEY (id_job) REFERENCES jobs (id)
 );

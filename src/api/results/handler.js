@@ -2,14 +2,16 @@
 const ROLES = require('../../utils/rolesENUM');
 
 class ResultsHandler {
-  constructor(usersService, resultsService, commentsService) {
+  constructor(usersService, resultsService, commentsService, jobsService) {
     this._usersService = usersService
     this._resultsService = resultsService;
-    this._commentsService = commentsService
+    this._commentsService = commentsService;
+    this._jobsService = jobsService;
 
     this.postResultHandler = this.postResultHandler.bind(this);
     this.postCommentResultHandler = this.postCommentResultHandler.bind(this);
     this.getResultByIdHandler = this.getResultByIdHandler.bind(this);
+    this.choosenResult = this.choosenResult.bind(this);
   }
 
   async postResultHandler(request, h) {
@@ -57,9 +59,7 @@ class ResultsHandler {
     const { resultId } = request.params;
     
     const result = await this._resultsService.getResultById(resultId);
-    console.log(result)
     const comments = await this._commentsService.getResultComments(resultId);
-    console.log(comments)
 
     const resultMapped = {
       id: result.id,
@@ -68,6 +68,7 @@ class ResultsHandler {
       file: `http://${request.headers.host}/${result.file}`,
       title: result.title,
       description: result.description,
+      isChoose: result.isChoose,
       comments: comments,
     }
 
@@ -78,6 +79,24 @@ class ResultsHandler {
       },
     });
     response.code(200);
+    return response;
+  }
+
+  async choosenResult(request, h) {
+    const { id: userId } = request.auth.credentials;
+    const { jobId, resultId } = request.params;
+    
+    await this._usersService.verifyRoleById({ id: userId, role: ROLES.UMKM });
+    await this._jobsService.ownerJob(jobId, userId);
+    const choosenId = await this._resultsService.choosenResult(jobId, resultId);
+
+    const response = h.response({
+      status: 'success',
+      data: {
+        choosenId,
+      },
+    });
+    response.code(201);
     return response;
   }
 }

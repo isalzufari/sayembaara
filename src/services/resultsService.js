@@ -29,6 +29,11 @@ class ResultsService {
     const result = await this._resultRepository.getResultById(id);
     return result;
   }
+
+  async choosenResult(jobId, resultId) {
+    const result = await this._resultRepository.choosenResult(jobId, resultId);
+    return result;
+  }
 }
 
 module.exports = ResultsService;
