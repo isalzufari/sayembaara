@@ -1,0 +1,81 @@
+{
+	"id": "7b5295f3-011d-46f3-a9d8-4f646e8065e5",
+	"name": "Sayembara Environment Copy",
+	"values": [
+		{
+			"key": "protocol",
+			"value": "http",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "host",
+			"value": "localhost",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "port",
+			"value": "8080",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "accessToken",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "refreshToken",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "jobId",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "umkm_id",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "mahasiswa_id",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "mhsAccessToken",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "mhsRefreshToken",
+			"value": "",
+			"type": "any",
+			"enabled": true
+		},
+		{
+			"key": "resultId",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-01-15T23:08:06.479Z",
+	"_postman_exported_using": "Postman/10.22.2"
+}
