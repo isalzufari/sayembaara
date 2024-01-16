@@ -8,7 +8,7 @@ class ResultsRepository {
 
   async postResult(userId, jobId, { title, description, file }) {
     const id = idGenerator();
-    
+
     const query = {
       text: 'INSERT INTO job_results(id, id_user, id_job, title, description, file) VALUES (?, ?, ?, ?, ?, ?)',
       values: [id, userId, jobId, title, description, file],
@@ -29,9 +29,9 @@ class ResultsRepository {
       ORDER BY job_results.is_choose DESC, job_results.created_at DESC`,
       values: [jobId]
     };
-    
+
     const [result] = await this._pool.query(query.text, query.values);
-    
+
     return result;
   }
 
@@ -43,30 +43,44 @@ class ResultsRepository {
       WHERE job_results.id = ?`,
       values: [resultId]
     };
-    
+
     const [result] = await this._pool.query(query.text, query.values);
-    
+
     return result[0];
   }
 
-  async choosenResult(jobId, resultId) {
+  async choosenResult({ updateIsChoose, jobId, resultId }) {
     const id = idGenerator();
-    
+
     let query = {
       text: 'INSERT INTO results_choosen(id, id_job, id_result) VALUES (?, ?, ?)',
       values: [id, jobId, resultId]
     };
 
     await this._pool.query(query.text, query.values);
-    
+
     query = {
-      text: 'UPDATE job_results SET is_choose = true WHERE id = ?',
-      values: [resultId]
+      text: 'UPDATE job_results SET is_choose = ? WHERE id = ?',
+      values: [updateIsChoose, resultId]
     };
-    
+
     await this._pool.query(query.text, query.values);
 
     return id;
+  }
+
+  async getIsChoosenById(id) {
+    const query = {
+      text: 'SELECT `is_choose` as isChoose FROM job_results WHERE id = ?',
+      values: [id],
+    };
+
+    const result = await this._pool.query(
+      query.text,
+      query.values,
+    );
+
+    return result[0][0];
   }
 }
 

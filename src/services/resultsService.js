@@ -31,7 +31,9 @@ class ResultsService {
   }
 
   async choosenResult(jobId, resultId) {
-    const result = await this._resultRepository.choosenResult(jobId, resultId);
+    const { isChoose } = await this._resultRepository.getIsChoosenById(resultId);
+    const updateIsChoose = isChoose === 0 ? 1 : 0;
+    const result = await this._resultRepository.choosenResult({ updateIsChoose, jobId, resultId });
     return result;
   }
 }

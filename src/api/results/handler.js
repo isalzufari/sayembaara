@@ -22,12 +22,12 @@ class ResultsHandler {
     const {
       title, description, file,
     } = request.payload;
-    
+
     await this._usersService.verifyRoleById({ id: userId, role: ROLES.MAHASISWA });
-    
+
     const resultId = await this._resultsService.postResult(userId, jobId, { title, description, file });
     console.log(resultId);
-    
+
     const response = h.response({
       status: 'success',
       data: {
@@ -42,7 +42,7 @@ class ResultsHandler {
     const { id: userId } = request.auth.credentials;
     const { resultId } = request.params;
     const { message } = request.payload;
-    
+
     const commentId = await this._commentsService.addResultComment(userId, resultId, message);
 
     const response = h.response({
@@ -57,7 +57,7 @@ class ResultsHandler {
 
   async getResultByIdHandler(request, h) {
     const { resultId } = request.params;
-    
+
     const result = await this._resultsService.getResultById(resultId);
     const comments = await this._commentsService.getResultComments(resultId);
 
@@ -74,9 +74,7 @@ class ResultsHandler {
 
     const response = h.response({
       status: 'success',
-      data: {
-        resultMapped,
-      },
+      data: resultMapped
     });
     response.code(200);
     return response;
@@ -85,7 +83,7 @@ class ResultsHandler {
   async choosenResult(request, h) {
     const { id: userId } = request.auth.credentials;
     const { jobId, resultId } = request.params;
-    
+
     await this._usersService.verifyRoleById({ id: userId, role: ROLES.UMKM });
     await this._jobsService.ownerJob(jobId, userId);
     const choosenId = await this._resultsService.choosenResult(jobId, resultId);
