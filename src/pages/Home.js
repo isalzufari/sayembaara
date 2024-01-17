@@ -9,6 +9,7 @@ const Home = ({ authUser }) => {
     const getJobs = async () => {
       const jobs = await api.getJobs();
       setJobs(jobs)
+      console.log(jobs)
       console.log(authUser)
     }
     getJobs();
@@ -22,13 +23,10 @@ const Home = ({ authUser }) => {
       <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
-            <img src="https://placehold.co/600x400" class="d-block w-100" alt="..." />
+            <img src="./img/home/umkm.png" class="d-block w-100" alt="Bangun UMKM Bersama Mahasiswa!" />
           </div>
           <div class="carousel-item">
-            <img src="https://placehold.co/600x400" class="d-block w-100" alt="..." />
-          </div>
-          <div class="carousel-item">
-            <img src="https://placehold.co/600x400" class="d-block w-100" alt="..." />
+            <img src="./img/home/student.png" class="d-block w-100" alt="Mahasiswa Kreatif UMKM Produktif!" />
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

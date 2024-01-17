@@ -3,11 +3,11 @@ import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const Navigation = ({ authUser, onSignOut }) => {
-  console.log(authUser);
   const location = useLocation();
   const navigate = useNavigate();
   const locationSplit = location.pathname.split('/');
   const slug = locationSplit[1];
+  console.log(authUser);
 
   return (
     <nav class="navbar bg-light fixed-top">
@@ -34,18 +34,21 @@ const Navigation = ({ authUser, onSignOut }) => {
 
         <div class="offcanvas offcanvas-start" style={{ width: '250px' }} tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
           <div class="offcanvas-header shadow-sm">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Sayembara</h5>
+            {/* <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Sayembara</h5> */}
+            <img src="./img/navbar/logo.png" alt='Sayembaara' height={30} />
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
             {authUser ?
               <>
-                <div class="d-flex justify-content-between mb-3">
+                <div class="col d-flex align-items-end mb-3">
                   <img src={authUser?.profile} alt={authUser?.name} className='rounded-circle' />
-                  <p>{authUser?.name}</p>
+                  <div className='ms-3'>
+                    <p>{authUser?.name}</p>
+                  </div>
                 </div>
                 <Link to="/umkm/job/upload" class="btn btn-outline-primary w-100" type="button">+ Buat Sayembara</Link>
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mt-3">
                   <li class="nav-item">
                     <Link to="/" className={`nav-link ${slug === '' && 'active'}`} aria-current="page" href="#">Beranda</Link>
                   </li>

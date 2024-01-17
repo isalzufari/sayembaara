@@ -1,5 +1,5 @@
 const api = (() => {
-  const BASE_URL = 'http://localhost:8080/api/v1';
+  const BASE_URL = 'http://34.42.80.220/api/v1';
 
   function putAccessToken(token) {
     localStorage.setItem('accessToken', token);
@@ -182,9 +182,106 @@ const api = (() => {
     return { status };
   }
 
+  async function addCommentJob({ jobId, comment }) {
+    const response = await _fetchWithAuth(`${BASE_URL}/jobs/${jobId}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: comment,
+      }),
+    });
+
+    const responseJson = await response.json();
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    return { status };
+  }
+
   async function updateDraft({ jobsId }) {
     const response = await _fetchWithAuth(`${BASE_URL}/jobs/${jobsId}/draft`, {
       method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const responseJson = await response.json();
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    return { status };
+  }
+
+  async function getResultJobById({ jobId, resultId }) {
+    const response = await fetch(`${BASE_URL}/jobs/${jobId}/results/${resultId}`);
+
+    const responseJson = await response.json();
+
+    const { status, message, data } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    return data;
+  }
+
+  async function addResultJob({ jobId, title, description, image }) {
+    const response = await _fetchWithAuth(`${BASE_URL}/jobs/${jobId}/results`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        title,
+        description,
+        file: image
+      }),
+    });
+
+    const responseJson = await response.json();
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    return { status };
+  }
+
+  async function addCommentResultJob({ jobId, resultId, comment }) {
+    const response = await _fetchWithAuth(`${BASE_URL}/jobs/${jobId}/results/${resultId}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        message: comment,
+      }),
+    });
+
+    const responseJson = await response.json();
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    return { status };
+  }
+
+  async function updateChoosen({ jobId, resultId }) {
+    const response = await _fetchWithAuth(`${BASE_URL}/jobs/${jobId}/results/${resultId}/choosen`, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -213,8 +310,13 @@ const api = (() => {
     getJobs,
     getJobById,
     addJobs,
+    addCommentJob,
     updateDraft,
     getJobsByUmkm,
+    getResultJobById,
+    addResultJob,
+    addCommentResultJob,
+    updateChoosen
   }
 })();
 

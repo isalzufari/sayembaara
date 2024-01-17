@@ -33,14 +33,13 @@ const Upload = () => {
       const base64Image = await toBase64(file);
       uploadImage.push(base64Image)
     });
+    console.log(uploadImage);
     setImage(uploadImage);
 
     if (e.target.files[0].size > 1048576) {
       alert("File is to big");
       return;
     }
-
-    // setImage([base64Image]);
   }
 
   return (
@@ -58,7 +57,7 @@ const Upload = () => {
         <label for="floatingPassword">Rentang Waktu</label>
       </div>
       <div class="form-floating mb-3">
-        <input value={description} onChange={(e) => setDescription(e.target.value)} type="text" class="form-control" id="floatingPassword" placeholder="Password" />
+        <textarea value={description} onChange={(e) => setDescription(e.target.value)} type="text" class="form-control" id="floatingPassword" placeholder="Password" />
         <label for="floatingPassword">Deskripsi</label>
       </div>
       <div class="form-floating mb-3">

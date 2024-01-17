@@ -20,6 +20,7 @@ import Notification from './pages/Notification';
 import Upload from './pages/umkm/jobs/Upload';
 import Lists from './pages/umkm/jobs/Lists';
 import Detail from './pages/umkm/jobs/Detail';
+import DetailWorkResult from './pages/umkm/jobs/DetailWorkResult';
 import Profile from './pages/Profile';
 import RegisterRole from './pages/RegisterRole';
 
@@ -29,10 +30,8 @@ const AppLayout = ({ authUser, onSignOut }) => (
     <header>
       <Navigation authUser={authUser} onSignOut={onSignOut} />
     </header>
-    <main>
-      <div className='container mt-5'>
-        <Outlet />
-      </div>
+    <main className='container' style={{ marginTop: '4rem' }}>
+      <Outlet />
     </main>
     <footer>
 
@@ -47,7 +46,7 @@ function App() {
   const onSignOut = () => {
     setauthUser(null);
     logoutAction();
-    navigate('/login');
+    navigate('/');
   }
 
   useEffect(() => {
@@ -95,7 +94,10 @@ function App() {
       </Route>
       <Route path='umkm' element={<AppLayout authUser={authUser} />}>
         <Route path='job'>
-          <Route path=':id' element={<Detail />} />
+          <Route path=':id'>
+            <Route index element={<Detail authUser={authUser} />} />
+            <Route path='result/:id' element={<DetailWorkResult />} />
+          </Route>
           <Route path='upload' element={<Upload />} />
           <Route path='list' element={<Lists />} />
         </Route>
