@@ -1,5 +1,5 @@
 const api = (() => {
-  const BASE_URL = 'http://34.172.108.43/api/v1';
+  const BASE_URL = 'http://34.101.201.141/api/v1';
 
   function putAccessToken(token) {
     localStorage.setItem('accessToken', token);
