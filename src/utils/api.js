@@ -1,5 +1,5 @@
 const api = (() => {
-  const BASE_URL = 'http://localhost:8080/api/v1';
+  const BASE_URL = 'http://34.42.80.220/api/v1';
 
   function putAccessToken(token) {
     localStorage.setItem('accessToken', token);
