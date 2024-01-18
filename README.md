@@ -11,9 +11,7 @@ http://34.101.201.141/
 # Mockups
 
 <img src="images/onboarding-1.png"/>
-
 <img src="images/onboarding-2.png"/>
-
 <img src="images/onboarding-3.png"/>
 
 <img src="images/register-1.png"/>
