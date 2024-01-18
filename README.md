@@ -6,7 +6,11 @@ Dimana UMKM memberikan lapangan serta tenaga kerja, sementara mahasiswa berkontr
 
 # Mockups
 
-Figma: https://www.figma.com/proto/yKmDah3R0TJgtop4vspH48/Paracetamol-Design-Area?type=design&node-id=99-168495&t=c5Q2hiz3OP3KC3uN-1&scaling=min-zoom&page-id=98%3A56306&starting-point-node-id=99%3A168495&mode=design
+<img src="images/onboarding-1.png"/>
+
+<img src="images/onboarding-2.png"/>
+
+<img src="images/onboarding-3.png"/>
 
 # Team
 
