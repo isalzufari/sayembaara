@@ -4,6 +4,10 @@ Sayembaara adalah platform yang mempertemukan UMKM dan mahasiswa untuk bekerja s
 
 Dimana UMKM memberikan lapangan serta tenaga kerja, sementara mahasiswa berkontribusi dengan kreativitas mereka.
 
+# links
+
+http://34.101.201.141/
+
 # Mockups
 
 <img src="images/onboarding-1.png"/>
@@ -11,6 +15,12 @@ Dimana UMKM memberikan lapangan serta tenaga kerja, sementara mahasiswa berkontr
 <img src="images/onboarding-2.png"/>
 
 <img src="images/onboarding-3.png"/>
+
+<img src="images/register-1.png"/>
+
+<img src="images/register-2.png"/>
+
+<img src="images/login.png"/>
 
 # Team
 
