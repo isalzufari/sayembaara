@@ -11,7 +11,9 @@ http://34.101.201.141/
 # Mockups
 
 <img src="images/onboarding-1.png"/>
+
 <img src="images/onboarding-2.png"/>
+
 <img src="images/onboarding-3.png"/>
 
 <img src="images/register-1.png"/>
@@ -19,6 +21,29 @@ http://34.101.201.141/
 <img src="images/register-2.png"/>
 
 <img src="images/login.png"/>
+
+<img src="images/beranda.png"/>
+
+<img src="images/search.png"/>
+
+<img src="images/notification.png"/>
+
+<img src="images/upload-sayembara-1.png"/>
+
+<img src="images/upload-sayembara-2.png"/>
+
+<img src="images/uploaded.png"/>
+
+<img src="images/profile.png"/>
+
+<img src="images/list.png"/>
+
+<img src="images/detail.png"/>
+
+<img src="images/detail-hasil.png"/>
+
+<img src="images/juara-sayembara.png"/>
+
 
 # Team
 
